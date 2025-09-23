@@ -16,9 +16,9 @@ int main(void){
 
 	LED_init();
 	LED_clear();
-
+int val;
 while(1){
-    for (int val = 1; val <= 255; val++) {
+    for (val = 1; val <= 255; val++) {
         // 하위 4비트 → Port L (PL0~3)
         GPIO_WRITE(GPIO_PORTL, 0x0F, val & 0x0F);
 
