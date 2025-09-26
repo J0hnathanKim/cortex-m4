@@ -42,38 +42,21 @@ void DIP_init(void) {
     RCGCGPIO |= (1U << 0) | (1U << 1) | (1U << 6) | (1U << 14);
 
     // 2) 방향: 입력으로 설정
-    GPIO_PORTA_DIR &= ~0xFF;  // PA 핀 입력
-    GPIO_PORTB_DIR &= ~0xFF;  // PB 핀 입력
-    GPIO_PORTG_DIR &= ~0xFF;  // PG 핀 입력
-    GPIO_PORTN_DIR &= ~0xFF;  // PN 핀 입력
+    GPIO_PORTA_DIR &= ~((1U<<3) | (1U<<6) | (1U<<7));
+    GPIO_PORTB_DIR &= ~(1U<<3);
+    GPIO_PORTQ_DIR &= ~((1U<<4) | (1U<<5) | (1U<<6));
+    GPIO_PORTG_DIR &= ~(1U<<6);
 
     // 3) 디지털 기능 활성화
-    GPIO_PORTA_DEN |= 0xFF;
-    GPIO_PORTB_DEN |= 0xFF;
-    GPIO_PORTG_DEN |= 0xFF;
-    GPIO_PORTN_DEN |= 0xFF;
+    GPIO_PORTA_DEN |= ((1U<<3) | (1U<<6) | (1U<<7));
+    GPIO_PORTB_DEN |= (1U<<3);
+    GPIO_PORTQ_DEN |= ((1U<<4) | (1U<<5) | (1U<<6));
+    GPIO_PORTG_DEN |= (1U<<6);
 
-    void DIP_init(void) {
-    // 1) 클럭 인가
-    RCGCGPIO |= (1U << 0) | (1U << 1) | (1U << 6) | (1U << 14);
-
-    // 2) 방향: 입력으로 설정
-    GPIO_PORTA_DIR &= ~0xFF;  // PA 핀 입력
-    GPIO_PORTB_DIR &= ~0xFF;  // PB 핀 입력
-    GPIO_PORTG_DIR &= ~0xFF;  // PG 핀 입력
-    GPIO_PORTN_DIR &= ~0xFF;  // PN 핀 입력
-
-    // 3) 디지털 기능 활성화
-    GPIO_PORTA_DEN |= 0xFF;
-    GPIO_PORTB_DEN |= 0xFF;
-    GPIO_PORTG_DEN |= 0xFF;
-    GPIO_PORTN_DEN |= 0xFF;
-
-    GPIO_PORTA_AFSEL &= ~0xFF;
-    GPIO_PORTB_AFSEL &= ~0xFF;
-    GPIO_PORTG_AFSEL &= ~0xFF;
-    GPIO_PORTN_AFSEL &= ~0xFF;
-
+    GPIO_PORTA_AFSEL &= ~((1U<<3) | (1U<<6) | (1U<<7));
+    GPIO_PORTB_AFSEL &= ~(1U<<3);
+    GPIO_PORTQ_AFSEL &= ~((1U<<4) | (1U<<5) | (1U<<6));
+    GPIO_PORTG_AFSEL &= ~(1U<<6);
 }
 
 
