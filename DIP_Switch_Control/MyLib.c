@@ -53,12 +53,27 @@ void DIP_init(void) {
     GPIO_PORTG_DEN |= 0xFF;
     GPIO_PORTN_DEN |= 0xFF;
 
-    // (선택) 풀업/풀다운 설정 → 스위치 구조에 따라 필요
-    // 예: 풀업 사용시
-    // GPIO_PORTA_PUR |= 0xFF;
-    // GPIO_PORTB_PUR |= 0xFF;
-    // GPIO_PORTG_PUR |= 0xFF;
-    // GPIO_PORTN_PUR |= 0xFF;
+    void DIP_init(void) {
+    // 1) 클럭 인가
+    RCGCGPIO |= (1U << 0) | (1U << 1) | (1U << 6) | (1U << 14);
+
+    // 2) 방향: 입력으로 설정
+    GPIO_PORTA_DIR &= ~0xFF;  // PA 핀 입력
+    GPIO_PORTB_DIR &= ~0xFF;  // PB 핀 입력
+    GPIO_PORTG_DIR &= ~0xFF;  // PG 핀 입력
+    GPIO_PORTN_DIR &= ~0xFF;  // PN 핀 입력
+
+    // 3) 디지털 기능 활성화
+    GPIO_PORTA_DEN |= 0xFF;
+    GPIO_PORTB_DEN |= 0xFF;
+    GPIO_PORTG_DEN |= 0xFF;
+    GPIO_PORTN_DEN |= 0xFF;
+
+    GPIO_PORTA_AFSEL &= ~0xFF;
+    GPIO_PORTB_AFSEL &= ~0xFF;
+    GPIO_PORTG_AFSEL &= ~0xFF;
+    GPIO_PORTN_AFSEL &= ~0xFF;
+
 }
 
 
