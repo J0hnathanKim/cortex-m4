@@ -28,7 +28,7 @@ int main(void){
 
 	        dip_data = ( GPIO_READ(GPIO_PORTA, 0x08) >> 3 )
 	                  | ( GPIO_READ(GPIO_PORTA, 0x20) >> 5 )
-	                  | ( GPIO_READ(GPIO_PORTA, ????) >> ? )
+	                  | ( GPIO_READ(GPIO_PORTA, 0x40) >> 4 )
 	                  | ( GPIO_READ(GPIO_PORTB, ????) >> ? )
 	                  | ( GPIO_READ(GPIO_PORTQ, ????) >> ? )
 	                  | ( GPIO_READ(GPIO_PORTQ, ????) >> ? )
