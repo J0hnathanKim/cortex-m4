@@ -18,23 +18,17 @@ int main(void){
 	 DIP_init();
 	 LED_clear();
 	 while(1){
-
+ 
 	        // Read Dip Sw
-	        /*
-	            //PA3
-	            //■■□□
-	            //3 2 1 0
-	            //8 4 2 1
+		  dip_data = ( GPIO_READ(GPIO_PORTA, 0x08) >> 3 )    // PA3 → bit0
+           | ( GPIO_READ(GPIO_PORTA, 0x40) >> 5 )   // PA6 → bit1
+           | ( GPIO_READ(GPIO_PORTA, 0x80) >> 5 )   // PA7 → bit2
+           | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 )   // PB3 → bit3
+           | ( GPIO_READ(GPIO_PORTQ, 0x10) >> 0 )   // PQ4 → bit4
+           | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 0 )   // PQ5 → bit5
+           | ( GPIO_READ(GPIO_PORTQ, 0x40) >> 0 )   // PQ6 → bit6
+           | ( GPIO_READ(GPIO_PORTG, 0x40) << 1 );  // PG6 → bit7
 
-	        dip_data = ( GPIO_READ(GPIO_PORTA, 0x08) >> 3 )
-	                  | ( GPIO_READ(GPIO_PORTA, 0x20) >> 5 )
-	                  | ( GPIO_READ(GPIO_PORTA, 0x40) >> 4 )
-	                  | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) 
-	                  | ( GPIO_READ(GPIO_PORTQ, ????) >> ? )
-	                  | ( GPIO_READ(GPIO_PORTQ, ????) >> ? )
-	                  | ( GPIO_READ(GPIO_PORTQ, ????) >> ? )
-	                  | ( GPIO_READ(GPIO_PORTG, ????) >> ? );
-	        */
 
 	        // LED
 	        GPIO_WRITE(GPIO_PORTL, 0xF,  (dip_data & 0xF));
