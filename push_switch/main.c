@@ -21,10 +21,14 @@ int main(void) {
 	LED_clear();
 
 	while(1){
-		//push_data = ?;
+		push_data = GPIO_READ(GPIO_PORTP,0x02) >> 1;
+		if(push_data == 0x00) {
+		            GPIO_WRITE(GPIO_PORTL, 0xf, 0x01);  // 스위치 눌리면 LED 켬 (액티브 로우)
+		        }
+		else {
+		            GPIO_WRITE(GPIO_PORTL, 0xf, 0x00);  // 스위치 떼면 LED 끔
+		        }
 		/*
-		if()
-			LED count increase
 		if()
 			LED count decrease
 		if()
