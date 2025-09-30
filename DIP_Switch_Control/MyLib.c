@@ -38,25 +38,22 @@ void LED_init(void){
 }
 
 void DIP_init(void) {
-    // 1) 클럭 인가
-    RCGCGPIO |= (1U << 0) | (1U << 1) | (1U << 6) | (1U << 14);
+        RCGCGPIO = RCGCGPIO | 0x4043;
 
-    // 2) 방향: 입력으로 설정
-    GPIO_PORTA_DIR &= ~((1U<<3) | (1U<<6) | (1U<<7));
-    GPIO_PORTB_DIR &= ~(1U<<3);
-    GPIO_PORTQ_DIR &= ~((1U<<4) | (1U<<5) | (1U<<6));
-    GPIO_PORTG_DIR &= ~(1U<<6);
+		GPIO_PORTA_DIR = GPIO_PORTA_DIR & ~((0x01<<3)|(0x01<<6)|(0x01<<7)) ;
+		GPIO_PORTB_DIR = GPIO_PORTB_DIR & ~(0x01<<3);
+		GPIO_PORTQ_DIR = GPIO_PORTQ_DIR & ~((0x01<<6)|(0x01<<5)|(0x01<<4));
+		GPIO_PORTG_DIR = GPIO_PORTG_DIR & ~(0x01<<6);
 
-    // 3) 디지털 기능 활성화
-    GPIO_PORTA_DEN |= ((1U<<3) | (1U<<6) | (1U<<7));
-    GPIO_PORTB_DEN |= (1U<<3);
-    GPIO_PORTQ_DEN |= ((1U<<4) | (1U<<5) | (1U<<6));
-    GPIO_PORTG_DEN |= (1U<<6);
+		GPIO_PORTA_AFSEL = GPIO_PORTA_AFSEL & ~((0x01<<3)|(0x01<<6)|(0x01<<7)) ;
+	    GPIO_PORTB_AFSEL = GPIO_PORTB_AFSEL & ~(0x01<<3);
+		GPIO_PORTQ_AFSEL = GPIO_PORTQ_AFSEL & ~((0x01<<6)|(0x01<<5)|(0x01<<4)) ;
+		GPIO_PORTG_AFSEL = GPIO_PORTG_AFSEL & ~(0x01<<6);
 
-    GPIO_PORTA_AFSEL &= ~((1U<<3) | (1U<<6) | (1U<<7));
-    GPIO_PORTB_AFSEL &= ~(1U<<3);
-    GPIO_PORTQ_AFSEL &= ~((1U<<4) | (1U<<5) | (1U<<6));
-    GPIO_PORTG_AFSEL &= ~(1U<<6);
+		GPIO_PORTA_DEN = GPIO_PORTA_DEN | (0x01<<3)|(0x01<<6)|(0x01<<7) ;
+		GPIO_PORTB_DEN = GPIO_PORTB_DEN | (0x01<<3);
+		GPIO_PORTQ_DEN = GPIO_PORTQ_DEN | (0x01<<6)|(0x01<<5)|(0x01<<4);
+		GPIO_PORTG_DEN = GPIO_PORTG_DEN | (0x01<<6);
 }
 
 
