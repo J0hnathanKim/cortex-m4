@@ -29,11 +29,14 @@ int main(void) {
 		           | ( GPIO_READ(GPIO_PORTQ, 0x40) >> 2 )   
 		           | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 0 )   
 		           | ( GPIO_READ(GPIO_PORTQ, 0x10) << 2 )   
-		           | ( GPIO_READ(GPIO_PORTG, 0x40) << 1 );  
+		           | ( GPIO_READ(GPIO_PORTG, 0x40) << 1 );
+
+		//if(dip_data & 0x01) cnt += 1;
+		//if(dip_data & 0x80) cnt -= 1;
 		// LED
-		GPIO_WRITE(GPIO_PORTL, 0xf, (dip_data&0xf));
-		GPIO_WRITE(GPIO_PORTM, 0xf, (dip_data>>4) & 0xf);
-		delay(2500000);
+		//GPIO_WRITE(GPIO_PORTL, 0xf, (cnt&0xf));
+		//GPIO_WRITE(GPIO_PORTM, 0xf, (cnt>>4) & 0xf);
+		//delay(2500000);
 	}
 
 }
