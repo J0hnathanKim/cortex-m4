@@ -4,6 +4,14 @@
 void LED_clear();
 void delay(int);
 
+// 8비트 비트 반전 함수
+unsigned char reverse8(unsigned char b) {
+    b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
+    b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
+    b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
+    return b;
+}
+
 int main(void){
     uint32_t g_ui32SysClock;
     unsigned char count = 0;   // LED 카운트 값 (0~255)
@@ -21,19 +29,20 @@ int main(void){
 
     while(1){
         // 1번 스위치 입력 읽기 (예: PA3이 1번 스위치라고 가정)
-        switch1 = (GPIO_READ(GPIO_PORTA, 0x08) >> 3);  
+        switch1 = (GPIO_READ(GPIO_PORTA, 0x08) >> 3);
 
-        if(switch1 == 1){  
+        if(switch1 == 1){
             // 스위치 ON → 업카운트
             count++;
 
-            // LED 출력 (PL=하위 4bit, PM=상위 4bit)
-            GPIO_WRITE(GPIO_PORTL, 0xF,  (count & 0x0F));
-            GPIO_WRITE(GPIO_PORTM, 0xF, ((count >> 4) & 0x0F));
+            // LED 출력 (반전된 비트: LSB가 LED8, MSB가 LED1)
+            unsigned char rev_count = reverse8(count);
+            GPIO_WRITE(GPIO_PORTL, 0xF,  (rev_count & 0x0F));
+            GPIO_WRITE(GPIO_PORTM, 0xF, ((rev_count >> 4) & 0x0F));
 
             delay(2500000);
 
-            if(count >= 255) { 
+            if(count >= 255) {
                 count = 0; // 255까지 카운트 후 다시 0으로
             }
         }
