@@ -35,11 +35,23 @@ int main(void) {
             delay(2000000);
           }
 		}
+		
+		if(push_data & 0x02){
+			for (val = 255; val >= 1; val--) {
+            // 하위 4비트 → Port L (PL0~3)
+            GPIO_WRITE(GPIO_PORTL, 0x0F, val & 0x0F);
+
+            // 상위 4비트 → Port M (PM0~3)
+            GPIO_WRITE(GPIO_PORTM, 0x0F, (val >> 4) & 0x0F);
+
+            // 잠깐 켜둠
+            delay(2000000);
+		}
 		/*
 		if()
-			LED off
+		 	LED off
 		if()
-		 	LED on
+		    LED on
 		*/
 		delay(900000);
 	}
