@@ -7,8 +7,8 @@ void delay(int count);
 
 int main(void) {
 	int push_data;
-	char count = 0;
-	int flag = 0;
+	int count = 0;
+
 
 	uint32_t ui32SysClock;
 	// Run from the PLL at 120 MHz.
@@ -19,17 +19,14 @@ int main(void) {
 	LED_init();
 
 	LED_clear();
-    int val;
+
 	while(1){
 		push_data = (~GPIO_READ(GPIO_PORTP, 0x02) >> 1) & (~GPIO_READ(GPIO_PORTN, 0x08) >> 2) & (~GPIO_READ(GPIO_PORTE, 0x20) >> 3) & (~GPIO_READ(GPIO_PORTK, 0x80) >> 4);
 		
 		if(push_data & 0x01){
-			for (val = 1; val <= 255; val++) {
+			for (count = 1; count <= 15; count++) {
             // 하위 4비트 → Port L (PL0~3)
-            GPIO_WRITE(GPIO_PORTL, 0x0F, val & 0x0F);
-
-            // 상위 4비트 → Port M (PM0~3)
-            GPIO_WRITE(GPIO_PORTM, 0x0F, (val >> 4) & 0x0F);
+            GPIO_WRITE(GPIO_PORTL, 0x0F, count & 0x0F);
 
             // 잠깐 켜둠
             delay(2000000);
@@ -37,12 +34,9 @@ int main(void) {
 		}
 		
 		if(push_data & 0x02){
-			for (val = 255; val >= 1; val--) {
+			for (count = 15; count >= 1; count--) {
             // 하위 4비트 → Port L (PL0~3)
-            GPIO_WRITE(GPIO_PORTL, 0x0F, val & 0x0F);
-
-            // 상위 4비트 → Port M (PM0~3)
-            GPIO_WRITE(GPIO_PORTM, 0x0F, (val >> 4) & 0x0F);
+            GPIO_WRITE(GPIO_PORTL, 0x0F, count & 0x0F);
 
             // 잠깐 켜둠
             delay(2000000);
