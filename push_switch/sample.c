@@ -23,7 +23,7 @@ int main(void) {
 	while(1){
 		push_data = (~GPIO_READ(GPIO_PORTP, 0x02) >> 1) & (~GPIO_READ(GPIO_PORTN, 0x08) >> 2) & (~GPIO_READ(GPIO_PORTE, 0x20) >> 3) & (~GPIO_READ(GPIO_PORTK, 0x80) >> 4);
 		/*
-		if()
+		if(push_data & 0x01)
 			LED count decrease
 		if()
 			LED off
