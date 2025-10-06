@@ -22,9 +22,20 @@ int main(void) {
 
 	while(1){
 		push_data = (~GPIO_READ(GPIO_PORTP, 0x02) >> 1) & (~GPIO_READ(GPIO_PORTN, 0x08) >> 2) & (~GPIO_READ(GPIO_PORTE, 0x20) >> 3) & (~GPIO_READ(GPIO_PORTK, 0x80) >> 4);
+		
+		if(push_data & 0x01){
+			for (val = 1; val <= 255; val++) {
+            // 하위 4비트 → Port L (PL0~3)
+            GPIO_WRITE(GPIO_PORTL, 0x0F, val & 0x0F);
+
+            // 상위 4비트 → Port M (PM0~3)
+            GPIO_WRITE(GPIO_PORTM, 0x0F, (val >> 4) & 0x0F);
+
+            // 잠깐 켜둠
+            delay(2000000);
+          }
+		}
 		/*
-		if(push_data & 0x01)
-			LED count decrease
 		if()
 			LED off
 		if()
