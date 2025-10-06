@@ -40,14 +40,11 @@ int main(void) {
 
             // 잠깐 켜둠
             delay(2000000);
+		  }
 		}
-		/*
-		if(push_data & 0x04)
-		 	LED off
-		if(push_data & 0x08)
-		    LED on
-		*/
-		delay(900000);
+		if(push_data & 0x04) GPIO_WRITE(GPIO_PORTL, 0x0F, 0x00);
+		if(push_data & 0x08) GPIO_WRITE(GPIO_PORTL, 0x0F, 0x0F);
+
 	}
 	return 0;
 }
