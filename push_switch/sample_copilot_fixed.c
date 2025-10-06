@@ -39,8 +39,8 @@ int main(void) {
                 GPIO_WRITE(GPIO_PORTL, 0x0F, count & 0x0F);
                 delay(2000000);
             }
-            // 스위치 릴리즈 대기(반복 방지)
-            while (!(GPIO_READ(GPIO_PORTP, 0x02)));
+            // 스위치 릴리즈 대기(반복 방지) -> 버튼을 누르고 있을때 알아서 카운트업 또는 다운 되는 동작을 원한다면 필요없음.
+            //while (!(GPIO_READ(GPIO_PORTP, 0x02)));
         }
 
         // 2번 스위치: 카운트다운 (15~1)
@@ -49,19 +49,19 @@ int main(void) {
                 GPIO_WRITE(GPIO_PORTL, 0x0F, count & 0x0F);
                 delay(2000000);
             }
-            while (!(GPIO_READ(GPIO_PORTN, 0x08)));
+            //while (!(GPIO_READ(GPIO_PORTN, 0x08)));
         }
 
         // 3번 스위치: LED 전체 OFF
         if(push_data & 0x04) {
             GPIO_WRITE(GPIO_PORTL, 0x0F, 0x00);
-            while (!(GPIO_READ(GPIO_PORTE, 0x20)));
+            //while (!(GPIO_READ(GPIO_PORTE, 0x20)));
         }
 
         // 4번 스위치: LED 전체 ON
         if(push_data & 0x08) {
             GPIO_WRITE(GPIO_PORTL, 0x0F, 0x0F);
-            while (!(GPIO_READ(GPIO_PORTK, 0x80)));
+            //while (!(GPIO_READ(GPIO_PORTK, 0x80)));
         }
     }
     return 0;
