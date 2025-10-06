@@ -25,6 +25,13 @@ int main(void) {
         if (!(GPIO_READ(GPIO_PORTN, 0x08))) push_data |= 0x02; // 2번 스위치(카운트다운)
         if (!(GPIO_READ(GPIO_PORTE, 0x20))) push_data |= 0x04; // 3번 스위치(LED OFF)
         if (!(GPIO_READ(GPIO_PORTK, 0x80))) push_data |= 0x08; // 4번 스위치(LED ON)
+        /*
+        push_data =
+         (!GPIO_READ(GPIO_PORTP, 0x02) << 0) |
+         (!GPIO_READ(GPIO_PORTN, 0x08) << 1) |
+         (!GPIO_READ(GPIO_PORTE, 0x20) << 2) |
+         (!GPIO_READ(GPIO_PORTK, 0x80) << 3);
+            */
 
         // 1번 스위치: 카운트업 (1~15)
         if(push_data & 0x01) {
