@@ -42,9 +42,9 @@ int main(void) {
             delay(2000000);
 		}
 		/*
-		if()
+		if(push_data & 0x04)
 		 	LED off
-		if()
+		if(push_data & 0x08)
 		    LED on
 		*/
 		delay(900000);
