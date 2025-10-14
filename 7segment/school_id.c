@@ -13,10 +13,10 @@ int main(void) {
 	FND_clear();
 
 	while(1){
-		WRITE_FND(1,2);          // FND1: 2
-		WRITE_FND_DOT(2,1);      // FND2: 1 + 점
-		WRITE_FND(3,8);          // FND3: 8
-		WRITE_FND_DOT(4,5);      // FND4: 5 + 점
+		WRITE_FND(1,3);          // FND1: 3
+		WRITE_FND_DOT(2,0);      // FND2: 0 + 점
+		WRITE_FND(3,7);          // FND3: 7
+		WRITE_FND_DOT(4,4);      // FND4: 4 + 점
 		WRITE_FND(5,1);          // FND5: 1
 		WRITE_FND(6,2);          // FND6: 2
 	}
