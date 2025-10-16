@@ -1,5 +1,3 @@
-//라이브러리는 기존꺼로 적용하기
-//내가 뭘 간과했는지 살펴보자.
 #include "cortex_m4.h"
 #include "MyLib.h"
 
