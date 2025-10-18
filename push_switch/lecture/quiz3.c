@@ -1,4 +1,5 @@
 //임베디드 시스템 교재 push switch 3번문제 푸는중,,,
+//push_sw_2번 조건을 이리저리 바꿔보자,,,
 #include "cortex_m4.h"
 #include "MyLib.h"
 
@@ -9,6 +10,8 @@ int main(void) {
 	int push1_current, push2_current, push3_current, push4_current;
 	int push1_prev = 0, push2_prev = 0, push3_prev = 0, push4_prev = 0;
     int push1_flag = 0;
+    int push2_flag = 0;
+    int count = 0;
 	uint32_t ui32SysClock;
 	// Run from the PLL at 120 MHz.
 	ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
@@ -37,6 +40,7 @@ int main(void) {
 
 		if(push1_prev != 0 && push1_current == 0) {
 			push1_flag = 1;
+			push2_flag = 0;
 		}
 		if(push1_flag == 1){
 			GPIO_WRITE(GPIO_PORTL, 0xF, (dip_data & 0xF));
@@ -49,18 +53,32 @@ int main(void) {
 
 
 		if(push2_prev != 0 && push2_current == 0) {
+			push1_flag = 0;
+			push2_flag = 1;
+		}
+
+		if(push2_flag == 1){
+			count += dip_data;
+			GPIO_WRITE(GPIO_PORTL, 0xF, ( count & 0xF));
+			GPIO_WRITE(GPIO_PORTM, 0xF, ( count >> 4) & 0xF);
+			delay(1000000);
+			if(count + dip_data >= 255){
+				count = 0;
+			}
 
 		}
 
 
 		if(push3_prev != 0 && push3_current == 0) {
 			push1_flag = 0;
+			push2_flag = 0;
 			GPIO_WRITE(GPIO_PORTL, 0xF, 0xF);
 			GPIO_WRITE(GPIO_PORTM, 0xF, 0xF);
 		}
 
 		if(push4_prev != 0 && push4_current == 0) {
 			push1_flag = 0;
+			push2_flag = 0;
 			GPIO_WRITE(GPIO_PORTL, 0xF, 0x0);
 			GPIO_WRITE(GPIO_PORTM, 0xF, 0x0);
 		}
