@@ -62,7 +62,7 @@ int main(void) {
 			GPIO_WRITE(GPIO_PORTL, 0xF, ( count & 0xF));
 			GPIO_WRITE(GPIO_PORTM, 0xF, ( count >> 4) & 0xF);
 			delay(1000000);
-			if(count + dip_data >= 255){
+			if(count + dip_data > 255){
 				count = 0;
 			}
 
