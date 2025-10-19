@@ -1,9 +1,7 @@
-/*
- * main3.c
- *
- *  Created on: 2025. 10. 16.
- *      Author: RI
- */
+/*DIP_SW 7번을 ON하면 FND 5번, 6번을 이용하여  십진수 2자리 
+up_counting을 한다. 십진수 99에 도달하면 다시 0이 된다. 이 상태에서 DIP_SW 7
+번을 off하고 DIP_SW 8번을 ON하면  down_counting한다. */
+
 #include "cortex_m4.h"
 #include "MyLib.h"
 
