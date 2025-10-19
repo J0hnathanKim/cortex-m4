@@ -1,4 +1,4 @@
-/*#include "cortex_m4.h"
+/*#include "cortex_m4.h" 주석으로 표시된 부분을 잘못작성된 코드다. 아래 제대로 작성된 코드와 비교하며 내가 무엇을 잘못적었는지 알아가자.
 #include "MyLib.h"
 
 void LED_clear();
