@@ -1,3 +1,6 @@
+//push switch 2번을 누르면 초기값 1 2 3 4 5 6 이 6개의 7segment에 표시된다.
+//push switch 2번을 누를때마다 7segment 상에 있는 값이 좌측으로 쉬프트하게 된다.
+
 #include "cortex_m4.h"
 #include "MyLib.h"
 
