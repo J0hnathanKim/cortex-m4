@@ -7,6 +7,8 @@ void delay(int count);
 int main(void) {
 	int push1_current, push4_current, push3_current;
 	int push1_prev = 0, push4_prev = 0, push3_prev = 0;
+	int push3_flag = 0;
+	int push4_flag = 0;
 
 	uint32_t ui32SysClock;
 	// Run from the PLL at 120 MHz.
@@ -35,16 +37,24 @@ int main(void) {
 
 
 		if(push1_prev != 0 && push1_current == 0) {
+			push3_flag = 0;
+			push4_flag = 0;
 			FND_clear();
 		}
 
 
 		if(push4_prev != 0 && push4_current == 0) {
+			push4_flag = 1;
+		}
+		if(push4_flag == 1){
 			WRITE_FND(4,(0xF0 & dip_data) >> 4);
 		}
 
 
 		if(push3_prev != 0 && push3_current == 0) {
+			push3_flag = 1;
+		}
+		if(push3_flag == 1){
 			WRITE_FND(3, 0x0F & dip_data);
 		}
 
@@ -53,7 +63,7 @@ int main(void) {
 		push4_prev = push4_current;
 		push3_prev = push3_current;
 
-		delay(10000);  
+		delay(10000);
 	}
 	return 0;
 }
