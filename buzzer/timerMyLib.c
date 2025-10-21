@@ -1,0 +1,117 @@
+/*
+ * MyLib.c
+ *
+ *  Created on: 2018. 03. 08.
+ *      Author: ESL-KMC
+ */
+#include "cortex_m4.h"
+#include "MyLib.h"
+
+void BUZZER_init(){
+	RCGCGPIO = RCGCGPIO | 0xA;
+
+	GPIO_PORTB_DIR = GPIO_PORTB_DIR | 0x04;
+	GPIO_PORTD_DIR = GPIO_PORTD_DIR | 0x10;
+
+	GPIO_PORTB_AFSEL = GPIO_PORTB_AFSEL | 0x4;			// Timer
+	GPIO_PORTD_AFSEL = GPIO_PORTD_AFSEL & (~ (0x10));
+
+	GPIO_PORTB_PC = GPIO_PORTB_PC | 0x30;
+	GPIO_PORTD_PC = GPIO_PORTD_PC | 0x300;
+
+	GPIO_PORTB_DR2R = GPIO_PORTB_DR2R & (~(0x4));
+	GPIO_PORTD_DR2R = GPIO_PORTD_DR2R & (~(0x10));
+
+	GPIO_PORTB_DR4R = GPIO_PORTB_DR4R | 0x4;
+	GPIO_PORTD_DR4R = GPIO_PORTD_DR4R | 0x10;
+
+	GPIO_PORTB_DR8R = GPIO_PORTB_DR8R | 0x4;
+	GPIO_PORTD_DR8R = GPIO_PORTD_DR8R & (~(0x10));
+
+	GPIO_PORTB_SLR = GPIO_PORTB_SLR & (~(0x4));
+	GPIO_PORTD_SLR = GPIO_PORTD_SLR & (~(0x10));;
+
+	GPIO_PORTB_DR12R = GPIO_PORTB_DR12R & (~(0x4));
+	GPIO_PORTD_DR12R = GPIO_PORTD_DR12R & (~(0x10));
+
+	GPIO_PORTB_PCTL = GPIO_PORTB_PCTL | 0x300;
+	GPIO_PORTD_PCTL = GPIO_PORTD_PCTL & (~(0xF0000));
+
+	GPIO_PORTB_DEN = GPIO_PORTB_DEN | 0x4;
+	GPIO_PORTD_DEN = GPIO_PORTD_DEN | 0x10;
+}
+
+void TIMER_init(){
+//-------------------- PWM --------------------
+	RCGCTIMER = RCGCTIMER | 0x20;
+
+	GPTMCC = 0x1;
+
+	GPTMCFG = 0x4;
+
+	GPTMTAMR = GPTMTAMR | 0xA;
+
+	GPTMCTL = GPTMCTL | 0x40; // 0x41 . timer enable
+
+	GPTMTAPR = 0x0;
+
+//-------------------- WDT --------------------
+	RCGCWD = RCGCWD | 0x2;
+
+	INTEN0 = 0x1<<18;
+
+	ALTCLKCFG = 0x0;
+
+	RCGCGPIO = RCGCGPIO | 0x2020;
+
+	GPIO_PORTF_AFSEL = GPIO_PORTF_AFSEL & (~ 0x2);
+	GPIO_PORTP_AFSEL = GPIO_PORTP_AFSEL & (~ 0x2);
+
+	GPIO_PORTF_DIR = GPIO_PORTF_DIR | 0x2;
+	GPIO_PORTP_DIR = GPIO_PORTP_DIR & ~(0x2);
+
+	GPIO_PORTF_PC = GPIO_PORTF_PC | 0xC;
+	GPIO_PORTF_DR2R = GPIO_PORTF_DR2R & (~PIN1);
+	GPIO_PORTF_DR4R = GPIO_PORTF_DR4R | 0x2;
+
+	GPIO_PORTF_DR8R = GPIO_PORTF_DR8R | 0x2;
+	GPIO_PORTF_SLR = GPIO_PORTF_SLR & (~0x2);
+	GPIO_PORTF_DR12R = GPIO_PORTF_DR12R & (~0x2);
+
+	GPIO_PORTF_DEN = GPIO_PORTF_DEN | 0x2;
+	GPIO_PORTP_DEN = GPIO_PORTP_DEN | 0x2;
+}
+
+void delay(int count){
+	while(count != 0){
+		count--;
+	}
+}
+void BUZZER_clear(){
+	GPTMTAILR = 0;
+	GPTMTMATCHR = 0;
+}
+void Play(int freq){ //pwm타이머, 원하는 주파수 넣으면 된다.
+	GPTMTAILR = freq;
+	GPTMTMATCHR = freq/2;
+}
+void DelayForPlay(int DLY){
+	//Watchdog Load(p.1185)
+	WDT1LOAD = DLY * 1000000;
+	while(!(WDT1CTL & 0x80000000));
+	//Watchdog Control(p.1187)
+	WDT1CTL = 0x1;
+
+	while(WDT1VALUE > 5);
+	WDT1CTL = 0x0;
+	WDT1ICR = 0x1;
+
+}
+
+void WDTinitISR(void){
+	// WDT
+	WDT1ICR = 0x1;
+}
+
+
+
