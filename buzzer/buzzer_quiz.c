@@ -59,9 +59,10 @@ int main(void){
 
 	    if(push1_prev != 0 && push1_current == 0) {
 	    	i += 1;
+	    	i %= 8;
 	    	GPIO_WRITE(GPIO_PORTL, 0xf, i);
 	    	GPIO_WRITE(GPIO_PORTM, 0xf, (i>>4));
-	        Play(buzzer[i%8]);
+	        Play(buzzer[i]);
 	        DelayForPlay(DLY_8);
 	        BUZZER_clear();
 	    }
@@ -69,9 +70,10 @@ int main(void){
 	    if(push2_prev != 0 && push2_current == 0){
 	    	i -= 1;
 	    	if(i < 0) i += 8;
+	    	i %= 8;
 	        GPIO_WRITE(GPIO_PORTL, 0xf, i);
 	       	GPIO_WRITE(GPIO_PORTM, 0xf, (i>>4));
-	    	Play(buzzer[i%8]);
+	    	Play(buzzer[i]);
 	    	DelayForPlay(DLY_8);
 	        BUZZER_clear();
 	    }
