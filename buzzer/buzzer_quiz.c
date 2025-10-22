@@ -1,4 +1,3 @@
-//working on it
 #include "cortex_m4.h"
 #include "MyLib.h"
 
@@ -39,9 +38,11 @@ int main(void){
 	ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
 									   SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
 									   SYSCTL_CFG_VCO_480), 120000000);
+	PUSH_init();
 	TIMER_init();
 	BUZZER_init();
 	WDTinitISR();
+	LED_init();
 
 	GPIO_WRITE(GPIO_PORTD, 0x10, 0x10);  // buzzer ON
 	GPTMCTL = GPTMCTL | 0x41;   		 // timer enable
@@ -49,27 +50,35 @@ int main(void){
 	BUZZER_clear();
 
 
-	int i = 0;
+	int i = -1;
 	while(1)
-		{
-		push1_current = GPIO_READ(GPIO_PORTP, PIN1);
-		//push2_current = GPIO_READ(GPIO_PORTN, PIN3);
-		if(push1_prev != 0 && push1_current == 0) {
+	{
+	    push1_current = GPIO_READ(GPIO_PORTP, PIN1);
+	    push2_current = GPIO_READ(GPIO_PORTN, PIN3);  // 일단 주석
+
+
+	    if(push1_prev != 0 && push1_current == 0) {
+	    	i += 1;
+	    	GPIO_WRITE(GPIO_PORTL, 0xf, i);
+	    	GPIO_WRITE(GPIO_PORTM, 0xf, (i>>4));
+	        Play(buzzer[i%8]);
+	        DelayForPlay(DLY_8);
+	        BUZZER_clear();
+	    }
+
+	    if(push2_prev != 0 && push2_current == 0){
+	    	i -= 1;
+	    	if(i < 0) i += 8;
+	        GPIO_WRITE(GPIO_PORTL, 0xf, i);
+	       	GPIO_WRITE(GPIO_PORTM, 0xf, (i>>4));
 	    	Play(buzzer[i%8]);
 	    	DelayForPlay(DLY_8);
-	    	BUZZER_clear();
-	    	i += 1;
-		}
-		/*if(push2_prev != 0 && push2_current == 0){
-			i -= 1;
-			if(i < 0) i = 7;
-			Play(buzzer[i%8]);
-		    DelayForPlay(DLY_8);
-		    BUZZER_clear();
-		}*/
-		push1_prev = push1_current;
-		/*push2_prev = push2_current;*/
-		}
+	        BUZZER_clear();
+	    }
+
+	    push1_prev = push1_current;
+	    push2_prev = push2_current;
+	}
     return 0;
 }
 void TimerEn() {
