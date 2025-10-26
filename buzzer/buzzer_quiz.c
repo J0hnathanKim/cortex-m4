@@ -6,9 +6,10 @@ void BUZZERON();
 void BUZZEROFF();
 void PLAY(int freq) ;
 void TimerEn() ;
-int push1_current, push2_current;
+int push1_current, push2_current, push3_current;
 int push1_prev = 0;
 int push2_prev = 0;
+int push3_prev = 0;
 int play_music[64] = { 20, 20, 20, 20, 20, 60, 20, 40, 40, 40, 20,
 
 	20, 60, 20, 80, 20, 40, 40, 40, 20, 20, 40,
@@ -26,6 +27,20 @@ int play_music[64] = { 20, 20, 20, 20, 20, 60, 20, 40, 40, 40, 20,
 	int music = 0;
 
 	int buzzer[8] = {N1, N2, N3, N4, N5, N6, N7, N8};
+
+	int melody[63] =  { N4, N5, N6, N4, N8, N6, N5, N8, N5, N4,
+
+			N2, N6, N4, N3, 0, N3, N2, N3, N4, N5, N1,
+
+			N4, N5, N6, N7, N7, N6, N5, N4, N5, 0,
+
+			N4, N5, N6, N4, N8, N6, N5, N8, N5, N4,
+
+			N2, N2, N3, N4, N1, 0, N1, N2, N3, N4,
+
+			N5, N1, N4, N5, N6, N7, N7, N6, N5, N4,
+
+			N4, 0 };
 
 int main(void){
 
@@ -49,12 +64,13 @@ int main(void){
 
 	BUZZER_clear();
 
-
+    int j = 0;
 	int i = -1;
 	while(1)
 	{
 	    push1_current = GPIO_READ(GPIO_PORTP, PIN1);
-	    push2_current = GPIO_READ(GPIO_PORTN, PIN3);  // 일단 주석
+	    push2_current = GPIO_READ(GPIO_PORTN, PIN3);
+	    push3_current = GPIO_READ(GPIO_PORTE, PIN5);
 
 
 	    if(push1_prev != 0 && push1_current == 0) {
@@ -78,8 +94,16 @@ int main(void){
 	        BUZZER_clear();
 	    }
 
+	    if(push3_prev != 0 && push3_current == 0){
+	    	for(j = 0; j < 63; j++){
+	    			    	Play(melody[j]);
+	    			    	DelayForPlay(DLY_8);
+	    			    }
+	    }
+
 	    push1_prev = push1_current;
 	    push2_prev = push2_current;
+	    push3_prev = push3_current;
 	}
     return 0;
 }
