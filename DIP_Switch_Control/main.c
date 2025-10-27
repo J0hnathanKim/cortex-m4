@@ -19,25 +19,28 @@ int main(void) {
 	LED_init();
 	DIP_init();
 	LED_clear();
-
+    int cnt = 0;
 	while(1){
 		// Read Dip Data
-		dip_data = ( GPIO_READ(GPIO_PORTA, 0x08) >> 3 )    
-		           | ( GPIO_READ(GPIO_PORTA, 0x40) >> 5 )   
-		           | ( GPIO_READ(GPIO_PORTA, 0x80) >> 5 )   
-		           | ( GPIO_READ(GPIO_PORTB, 0x08))   
-		           | ( GPIO_READ(GPIO_PORTQ, 0x40) >> 2 )   
-		           | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 0 )   
-		           | ( GPIO_READ(GPIO_PORTQ, 0x10) << 2 )   
+		dip_data = ( GPIO_READ(GPIO_PORTA, 0x08) >> 3 )
+		           | ( GPIO_READ(GPIO_PORTA, 0x40) >> 5 )
+		           | ( GPIO_READ(GPIO_PORTA, 0x80) >> 5 )
+		           | ( GPIO_READ(GPIO_PORTB, 0x08))
+		           | ( GPIO_READ(GPIO_PORTQ, 0x40) >> 2 )
+		           | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 0 )
+		           | ( GPIO_READ(GPIO_PORTQ, 0x10) << 2 )
 		           | ( GPIO_READ(GPIO_PORTG, 0x40) << 1 );
 
-		//if(dip_data & 0x01) cnt += 1;
-		//if(dip_data & 0x80) cnt -= 1;
+		if(dip_data & 0x01) cnt += 1;
+		if(dip_data & 0x80) cnt -= 1;
+		if(cnt < 0) cnt = 255;
+		if(cnt > 255) cnt = 0;
 		// LED
-		GPIO_WRITE(GPIO_PORTL, 0xf, (dip_data&0xf));
-		GPIO_WRITE(GPIO_PORTM, 0xf, (dip_data>>4) & 0xf);
+		GPIO_WRITE(GPIO_PORTL, 0xf, (cnt&0xf));
+		GPIO_WRITE(GPIO_PORTM, 0xf, (cnt>>4) & 0xf);
 		delay(2500000);
 	}
+	return 0;
 
 }
 
