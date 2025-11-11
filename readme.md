@@ -17,4 +17,18 @@ vector table: ISR의 위치(고정 위치) (program -> vector table -> ISR)
 <레지스터>  
 -mask  
 <인터럽트 서비스 루틴>  
+<LCD>  
+display site: 480 x 272  
+cpu -> frame buffer (buffer memory), pointer, video controller, dma  
+data  
+1)image  
+카메라로 찍어서 생성된 데이터  
+2)graphics  
+픽셀 단위로 만들어짐  
+pixel => gray(밝기, 0~255 byte)  
+color(r, g, b)  
+프로그램 실행 -> 코드 영역에 들어감(데이터 영역 x)  
+code, buffer  
+image_trans.exe -> data(image)를 buffer로 보낸다.  
+
 
