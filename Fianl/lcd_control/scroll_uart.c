@@ -49,6 +49,15 @@ int main(void) {
 		if(code == 'a'){
 		  Scroll_left(buffer, 0, 0, width, height, 1);
 		}
+		else if(code == 'd'){
+			Scroll_right(buffer, 0, 0, width, height, 1);
+		}
+		else if(code == 'w'){
+			Scroll_up(buffer, 0, 0, width, height, 1);
+		}
+		else if(code == 's'){
+			Scroll_down(buffer, 0, 0, width, height, 1);
+		}
 
 	}
 
