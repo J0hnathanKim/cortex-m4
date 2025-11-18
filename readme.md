@@ -30,5 +30,16 @@ color(r, g, b)
 프로그램 실행 -> 코드 영역에 들어감(데이터 영역 x)  
 code, buffer  
 image_trans.exe -> data(image)를 buffer로 보낸다.  
+<11/18>  
+draw image -> scan line(좌표 평면위의 각 줄)  
+좌표계산에 익숙해질것.  
+맨 왼쪽 위가 0,0 ? 맨 오른쪽 아래가 480,272?  
+중심(240, 136)  
+data -> bit map(memory) -> buffer(frame buffer) / LCD제어기 -> 화면에 이미지 뿌려줌  
+색상: 밝기값을 얼마나 주냐 ex) 빨간색(5bit)에 11111값을 주면 제일 빨간색이 나옴.  
+수평주파수(Hclk)  
+draw circle => 원의 방정식 활용. 원의 범위 내에서 픽셀을 찍도록 구현  
+draw triangle?  
+
 
 
