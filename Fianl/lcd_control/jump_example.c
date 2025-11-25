@@ -12,18 +12,25 @@
 unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
 
 uint32_t g_ui32SysClock;
-
-
+void delay_ms(int ms) {
+    volatile int i, j;
+    for (i = 0; i < ms; i++) {
+        for (j = 0; j < 4000; j++) {
+        }
+    }
+}
 
 void jump_parabola(int *x1, int *y1, int *x2, int *y2) {
     int i;
-    for(i = 0; i < 1; i++) {
+    for (i = 0; i < 1; i++) {
         DrawRect(*x1, *y1, *x2, *y2, COLOR_GREEN);
         *x1 += 40;
         *x2 += 40;
         *y1 += 40;
         *y2 += 40;
         DrawRect(*x1, *y1, *x2, *y2, COLOR_BLUE);
+
+        delay_ms(80);
 
         DrawRect(*x1, *y1, *x2, *y2, COLOR_GREEN);
         *x1 += 40;
@@ -46,9 +53,9 @@ int main(void) {
 	LCD_Init(g_ui32SysClock);
     int x1, x2, y1, y2;
     x1 = 50;
-    x2 = 100;
+    x2 = 70;
     y1 = 70;
-    y2 = 120;
+    y2 = 90;
 
 	DrawRect(x1, y1, x2, y2, COLOR_BLUE);
 
