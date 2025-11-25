@@ -1,4 +1,4 @@
-#include "cortex_m4.h"
+#include "cortex_m4.h" //스크롤이 진행되는 영역을 정해주어야함.
 #include "myLib.h"
 #include "math.h"
 #include "time.h"
