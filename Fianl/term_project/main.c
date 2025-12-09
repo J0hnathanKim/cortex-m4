@@ -94,7 +94,7 @@ int main(void) {
         COLOR_INDIGO,   // 6: 라
         COLOR_VIOLET    // 7: 시
     };
-
+    int led = 0b100000000;
     int x1 = 430;
     int y1 = 30;
     int x2 = 480;
@@ -132,9 +132,8 @@ int main(void) {
                 code = Uart_GetKey();
                 break;
             }
-
-            // 너무 바쁘게 돌지 않도록 약간 딜레이
             delay(1000);
+
         }
         switch(code){
         case 'a':
@@ -146,6 +145,9 @@ int main(void) {
         if(move % 50 == 0 && move >= 50) {
         	fnd = move / 50;
         	play_note(0);
+        	led = (led >> 1);
+        	GPIO_WRITE(GPIO_PORTL, 0xf, led & 0xf);
+        	GPIO_WRITE(GPIO_PORTM, 0xf, (led>>4)&0xf);
         }
 
     }
